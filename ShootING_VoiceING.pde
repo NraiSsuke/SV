@@ -161,8 +161,8 @@ int time_H = 175;
 int time_S = 90;
 int time_B = 95;
 
-int time_x;
-int time_y;
+int time_x; //時間を表示する座標x
+int time_y; //時間を表示する座標y
 
 int game_over_y = 300;
 
