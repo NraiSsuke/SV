@@ -5,8 +5,8 @@ AudioInput in;
 FFT fft;
 
 PFont font_text;
-PFont font_timer;
-PFont font_ballcounter;
+PFont font_time;
+PFont font_pm;
 PFont font_title;
 
 int start_frame = 0;
@@ -161,8 +161,8 @@ int time_H = 175;
 int time_S = 90;
 int time_B = 95;
 
-int time_x; //時間を表示する座標x
-int time_y; //時間を表示する座標y
+int time_x;
+int time_y;
 
 int game_over_y = 300;
 
@@ -175,45 +175,31 @@ int continue_text_y = 473;
 
 
 void setup(){
-  // 文字のフォントを指定
-  font_text = loadFont("NirmalaUI-Semilight-107.vlw");
-  font_timer = loadFont("Rockwell-40.vlw");
-  font_ballcounter = loadFont("MS-UIGothic-70.vlw");
-  font_title = loadFont("YuGothic-Bold-100.vlw");
-
   // インスタンス化
-  upper_left_x = new int[block_num_def];
+  left_upper_x = new int[block_num_def];
   left_upper_y = new int[block_num_def];
   right_under_x = new int[block_num_def];
   right_under_y = new int[block_num_def];
   
   // ブロックの座標設定
-  upper_left_x[0] = 40;  under_right_x[0] = 300;
-  upper_left_y[0] = 40;  under_right_y[0] = 120;
-
-  upper_left_x[1] = 80;  under_right_x[1] = 520;
-  upper_left_y[1] = 460;  under_right_y[1] = 610;
-
-  upper_left_x[2] = 20;  under_right_x[2] = 120;
-  upper_left_y[2] = 160;  under_right_y[2] = 240;
-
-  upper_left_x[3] = 240;  under_right_x[3] = 360;
-  upper_left_y[3] = 460;  under_right_y[3] = 480;
-
-  upper_left_x[4] = 80;  under_right_x[4] = 100;
-  upper_left_y[4] = 520;  under_right_y[4] = 600;
-
-  upper_left_x[5] = 500;  under_right_x[5] = 520;
-  upper_left_y[5] = 520;  under_right_y[5] = 600;
-
-  upper_left_x[6] = 200;  under_right_x[6] = 380;
-  upper_left_y[6] = 240;  under_right_y[6] = 300;
-
-  upper_left_x[7] = 500;  under_right_x[7] = 560;
-  upper_left_y[7] = 40;  under_right_y[7] = 100;
-
-  upper_left_x[8] = 80;  under_right_x[8] = 140;
-  upper_left_y[8] = 320;  under_right_y[8] = 380;
+  left_upper_x[0] = 40;  right_under_x[0] = 300;
+  left_upper_y[0] = 40;  right_under_y[0] = 120;
+  left_upper_x[1] = 80;  right_under_x[1] = 520;
+  left_upper_y[1] = 460;  right_under_y[1] = 610;
+  left_upper_x[2] = 20;  right_under_x[2] = 120;
+  left_upper_y[2] = 160;  right_under_y[2] = 240;
+  left_upper_x[3] = 240;  right_under_x[3] = 360;
+  left_upper_y[3] = 460;  right_under_y[3] = 480;
+  left_upper_x[4] = 80;  right_under_x[4] = 100;
+  left_upper_y[4] = 520;  right_under_y[4] = 600;
+  left_upper_x[5] = 500;  right_under_x[5] = 520;
+  left_upper_y[5] = 520;  right_under_y[5] = 600;
+  left_upper_x[6] = 200;  right_under_x[6] = 380;
+  left_upper_y[6] = 240;  right_under_y[6] = 300;
+  left_upper_x[7] = 500;  right_under_x[7] = 560;
+  left_upper_y[7] = 40;  right_under_y[7] = 100;
+  left_upper_x[8] = 80;  right_under_x[8] = 140;
+  left_upper_y[8] = 320;  right_under_y[8] = 380;
   
   sound_on_x = new float[60];
   sound_on_y = new float[60];
@@ -221,7 +207,10 @@ void setup(){
   explosion_y = new float[explosion_num];
   explosion_dx = new float[explosion_num];
   explosion_dy = new float[explosion_num];
-  
+  font_text = loadFont("NirmalaUI-Semilight-107.vlw");
+  font_time = loadFont("Rockwell-40.vlw");
+  font_pm = loadFont("MS-UIGothic-70.vlw");
+  font_title = loadFont("YuGothic-Bold-100.vlw");
   
   
   
@@ -285,7 +274,7 @@ void draw(){
         fill(270, 50, 70, 60);
         stroke(270, 50, 70);
         rect(362, 322, 438, 398);
-        textFont(font_ballcounter);
+        textFont(font_pm);
         fill(330, 50, 70, 180);
         text("+", 183.5, 385);
         fill(270, 50, 70, 180);
@@ -329,7 +318,7 @@ void draw(){
         strokeWeight(4);
         rect(242, 322, 358, 398);
         fill(shoot_fi_H, shoot_fi_S, shoot_fi_B);
-        textFont(font_timer);
+        textFont(font_time);
         textSize(50);
         if(ball_num < 10) text(str(ball_num), 287, 376);
         else if(ball_num < 100)text(str(ball_num), 274, 376);
@@ -845,7 +834,7 @@ void GameOver(){
         fill(time_H, time_S, time_B);
         textSize(40);
         text("result :", 20, 300);
-        textFont(font_timer);
+        textFont(font_time);
         textSize(40);
         if(h != 0) text(text_h +" h. "+ text_m +" m. "+ text_s +" s", 190, 300);
         else{
@@ -1016,7 +1005,7 @@ void Block(){
 
 void TextTime(){
   fill(time_H, time_S, time_B, 255);
-  textFont(font_timer);
+  textFont(font_time);
   textSize(40);
   text(text_h +":"+ text_m +":"+ text_s +":"+ text_f, 67, 94);
 }
